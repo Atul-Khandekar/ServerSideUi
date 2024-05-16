@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 
 data class ModifierX(
     @SerializedName("alignment")
-    val alignment: String?,
+    val textAlignment: String?,
     @SerializedName("backgroundColor")
     val backgroundColor: String?,
     @SerializedName("borderColor")
@@ -21,5 +21,10 @@ data class ModifierX(
     @SerializedName("size")
     val size: Size?,
     @SerializedName("textStyle")
-    val textStyle: TextStyle?
+    val textStyle: TextStyle?,
+    @SerializedName("horizontalAlignment")
+    val horizontalAlignment: String? = null ,
+    @SerializedName("verticalAlignment")
+    val verticalAlignment: String? = null ,
+
 )

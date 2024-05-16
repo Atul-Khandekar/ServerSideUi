@@ -2,27 +2,36 @@ package com.example
 
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.text.font.FontWeight.Companion.Normal
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.model.CornerRadius
 
-fun Color.Companion.fromHex(colorString: String) =
-Color(android.graphics.Color.parseColor(colorString))
+fun Color.Companion.fromHex(colorString: String?): Color {
+    colorString?.let {
+       return  Color(android.graphics.Color.parseColor(colorString))
+    }
+    return Color.Black
+}
+
 
 fun Int?.toDp(): Dp {
     return this?.dp ?: 0.dp
 }
+
 fun Int?.toSp(): TextUnit {
     return this?.sp ?: 0.sp
 }
+
 fun String?.getShape(radius: CornerRadius?): Shape {
 
     radius?.let {
@@ -43,10 +52,46 @@ fun String?.getShape(radius: CornerRadius?): Shape {
 }
 
 fun String?.getFontStyle(): FontWeight {
-    return when(this) {
+    return when (this) {
         "Bold" -> Bold
-        else ->  {
+        else -> {
             Normal
+        }
+    }
+}
+
+fun String?.getTextAlignment(): TextAlign {
+    return when (this) {
+        "Center" -> TextAlign.Center
+        "Left" -> TextAlign.Left
+        "Right" -> TextAlign.Right
+        "Justify" -> TextAlign.Justify
+        "Start" -> TextAlign.Start
+        "End" -> TextAlign.End
+        else -> {
+            TextAlign.Left
+        }
+    }
+}
+
+fun String?.getHorizontalAlignment(): Alignment.Horizontal {
+    return when(this) {
+        "CenterHorizontal" -> Alignment.CenterHorizontally
+        "Start" -> Alignment.Start
+        "End" -> Alignment.End
+        else -> {
+            Alignment.Start
+        }
+    }
+}
+
+fun String?.getVerticalAlignment(): Alignment.Vertical {
+    return when(this) {
+        "CenterVertical" -> Alignment.CenterVertically
+        "Top" -> Alignment.Top
+        "Bottom" -> Alignment.Bottom
+        else -> {
+            Alignment.CenterVertically
         }
     }
 }
