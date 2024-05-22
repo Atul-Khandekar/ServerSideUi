@@ -4,8 +4,6 @@ package com.example.model
 import com.google.gson.annotations.SerializedName
 
 data class Modifier(
-    @SerializedName("alignment")
-    val alignment: String?,
     @SerializedName("backgroundColor")
     val backgroundColor: String?,
     @SerializedName("borderColor")
@@ -15,11 +13,17 @@ data class Modifier(
     @SerializedName("clipShape")
     val clipShape: String?,
     @SerializedName("cornerRadius")
-    val cornerRadius: String?,
+    val cornerRadius: CornerRadius?,
+    @SerializedName("horizontalAlignment")
+    val horizontalAlignment: String?,
     @SerializedName("layoutParams")
-    val layoutParams: String?,
+    val layoutParams: LayoutParams?,
     @SerializedName("size")
-    val size: String?,
+    val size: Size?,
+    @SerializedName("textAlignment")
+    val textAlignment: String?,
     @SerializedName("textStyle")
-    val textStyle: String?
+    val textStyle: TextStyle?,
+    @SerializedName("verticalAlignment")
+    val verticalAlignment: String?
 )

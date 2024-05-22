@@ -13,7 +13,5 @@ data class TextStyle(
     @SerializedName("textSize")
     val textSize: Int?,
     @SerializedName("textStyle")
-    val textStyle: String?,
-    @SerializedName("alignment")
-    val alignment: String?
+    val textStyle: String?
 )

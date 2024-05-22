@@ -7,7 +7,7 @@ data class UIModelItem(
     @SerializedName("children")
     val children: List<UIModelItem>?,
     @SerializedName("modifier")
-    val modifier: ModifierX?,
+    val modifier: Modifier?,
     @SerializedName("value")
     val value: String?,
     @SerializedName("viewType")

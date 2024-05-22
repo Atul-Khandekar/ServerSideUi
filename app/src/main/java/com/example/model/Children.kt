@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 
 data class Children(
     @SerializedName("children")
-    val children: List<Any?>?,
+    val children: Any?,
     @SerializedName("modifier")
     val modifier: Modifier?,
     @SerializedName("value")

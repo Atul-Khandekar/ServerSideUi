@@ -27,8 +27,8 @@ import com.example.toDp
 import com.example.toSp
 
 @Composable
-fun DeriveUIFromServer(components: List<UIModelItem>) {
-    components.forEach { item ->
+fun DeriveUIFromServer(components: List<UIModelItem>?) {
+    components?.forEach { item ->
         when (item.viewType) {
             "Image" -> DeriveImage(component = item)
             "Column" -> DeriveColumn(component = item)
@@ -78,10 +78,9 @@ fun DeriveText(component: UIModelItem) {
     val textStyle = component.modifier?.textStyle
     Text(
         text = component.value ?: "Empty String",
-        color = Color.fromHex(textStyle?.textColor.toString()),
+        color = Color.fromHex(textStyle?.textColor ?: "#000000"),
         fontSize = textStyle?.textSize.toSp(),
         fontWeight = textStyle?.textStyle.getFontStyle(),
-        textAlign = textStyle?.alignment.getTextAlignment(),
         maxLines = textStyle?.maxLines ?: 0,
         modifier = Modifier.padding(
             component.modifier?.layoutParams?.padding?.left?.dp ?: 0.dp,

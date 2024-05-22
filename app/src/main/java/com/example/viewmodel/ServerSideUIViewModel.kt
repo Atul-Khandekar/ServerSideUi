@@ -3,7 +3,7 @@ package com.example.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.base.BaseResponse
-import com.example.model.UIModelItem
+import com.example.model.ServerResponseModel
 import com.example.repository.ServerSideUIRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -23,7 +23,7 @@ class ServerSideUIViewModel @Inject constructor(private val repository: ServerSi
     private var _errorMessage = MutableStateFlow<String?>(null)
     val errorMessage = _errorMessage.asStateFlow()
 
-    private var _uiList = MutableStateFlow<List<UIModelItem>?>(emptyList())
+    private var _uiList = MutableStateFlow<ServerResponseModel?>(null)
     val uiList = _uiList.asStateFlow()
 
 
@@ -36,8 +36,8 @@ class ServerSideUIViewModel @Inject constructor(private val repository: ServerSi
                     }
 
                     is BaseResponse.Success -> {
-                        it.data.let { list ->
-                            _uiList.emit(list)
+                        it.data.let { response ->
+                            _uiList.emit(response)
                         }
                         _isLoading.emit(false)
                     }
