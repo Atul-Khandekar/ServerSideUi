@@ -79,6 +79,7 @@ dependencies {
 
     implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
     implementation(platform("androidx.compose:compose-bom:2024.02.01"))
+    implementation("io.ably:ably-android:1.2.38")
 
 
     val lifecycle_version = "2.6.0-alpha05"
