@@ -34,32 +34,10 @@ class MainActivity : ComponentActivity() {
             ServerSideUITheme {
 
                 val state by viewModel.uiList.collectAsState()
-
-
-                        try {
-                            val ablyRealtime = AblyRealtime(AppConstants.ABLY_REALTIE_KEY)
-                            val channel = ablyRealtime.channels.get("android-json")
-                            ablyRealtime.connection.on(
-                                ConnectionEvent.connected,
-                                ConnectionStateListener {
-                                    Log.d("connection", "connection Successfull")
-                                    channel.subscribe(object: Channel.MessageListener{
-                                        override fun onMessage(message: Message?) {
-                                            Log.d("Ably",message.toString())
-                                        }
-
-                                    })
-                                })
-                        }catch (e:Exception){
-                            Toast.makeText(this@MainActivity,e.toString(),Toast.LENGTH_LONG).show()
-                            Log.d("error",e.toString())
-                        }
-
-
-                        DeriveUIFromServer(components = state?.json)
-
-
-
+                LaunchedEffect(key1 = Unit) {
+                    viewModel.getUIFromServer()
+                }
+                DeriveUIFromServer(components = state?.json?.json)
             }
         }
     }
