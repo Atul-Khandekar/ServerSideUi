@@ -1,5 +1,6 @@
 package com.example
 
+import android.util.Log
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.Alignment
@@ -18,7 +19,12 @@ import com.example.model.CornerRadius
 
 fun Color.Companion.fromHex(colorString: String?): Color {
     colorString?.let {
-       return  Color(android.graphics.Color.parseColor(colorString))
+        return try {
+            Color(android.graphics.Color.parseColor(colorString))
+        } catch (e: Exception) {
+            Log.d("exception", e.toString())
+            return Color.Black
+        }
     }
     return Color.Black
 }
@@ -75,7 +81,7 @@ fun String?.getTextAlignment(): TextAlign {
 }
 
 fun String?.getHorizontalAlignment(): Alignment.Horizontal {
-    return when(this) {
+    return when (this) {
         "CenterHorizontal" -> Alignment.CenterHorizontally
         "Start" -> Alignment.Start
         "End" -> Alignment.End
@@ -86,7 +92,7 @@ fun String?.getHorizontalAlignment(): Alignment.Horizontal {
 }
 
 fun String?.getVerticalAlignment(): Alignment.Vertical {
-    return when(this) {
+    return when (this) {
         "CenterVertical" -> Alignment.CenterVertically
         "Top" -> Alignment.Top
         "Bottom" -> Alignment.Bottom
