@@ -4,6 +4,7 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -31,16 +32,48 @@ import com.example.toSp
 @Composable
 fun DeriveUIFromServer(components: List<UIModelItem>?) {
     components?.forEach { item ->
+
+
         when (item.viewType) {
             "Image" -> DeriveImage(component = item)
             "Column" -> DeriveColumn(component = item)
             "Row" -> DeriveRow(component = item)
             "Text" -> DeriveText(component = item)
             "Box" -> DeriveBox(component = item)
+            "HorizontalScrollBox" -> DeriveHorizontalBox(component =  item)
             else -> {
                 Text("Invalid input")
             }
         }
+    }
+}
+
+@Composable
+fun DeriveHorizontalBox(component: UIModelItem) {
+    Box(
+        modifier = Modifier
+            .padding(
+                component.modifier?.layoutParams?.padding?.left?.dp ?: 0.dp,
+                component.modifier?.layoutParams?.padding?.top?.dp ?: 0.dp,
+                component.modifier?.layoutParams?.padding?.right?.dp ?: 0.dp,
+                component.modifier?.layoutParams?.padding?.bottom?.dp ?: 0.dp,
+            )
+            .background(
+                color = Color.fromHex(component.modifier?.backgroundColor),
+            )
+            .border(
+                border = BorderStroke(
+                    component.modifier?.borderWidth.toDp(),
+                    Color.fromHex(component.modifier?.borderColor.toString())
+                )
+            )
+            .clip(
+                component.modifier?.clipShape.getShape(component.modifier?.cornerRadius)
+            )
+            .horizontalScroll(rememberScrollState())
+
+    ) {
+        component.children?.let { DeriveUIFromServer(components = it) }
     }
 }
 

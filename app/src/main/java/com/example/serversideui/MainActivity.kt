@@ -30,9 +30,10 @@ class MainActivity : ComponentActivity() {
 
         enableEdgeToEdge()
         setContent {
-            val state by viewModel.uiList.collectAsState()
+
             ServerSideUITheme {
                 Box(Modifier.verticalScroll(rememberScrollState())) {
+                    val state by viewModel.uiList.collectAsState()
                     LaunchedEffect(key1 = Unit) {
                         viewModel.getUIFromServer()
                     }
