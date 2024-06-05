@@ -8,6 +8,7 @@ import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
@@ -36,6 +37,7 @@ fun DeriveUIFromServer(components: List<UIModelItem>?) {
 
         when (item.viewType) {
             "Image" -> DeriveImage(component = item)
+            "FullWidthImage" -> DeriveImageWithFullWidth(component = item)
             "Column" -> DeriveColumn(component = item)
             "Row" -> DeriveRow(component = item)
             "Text" -> DeriveText(component = item)
@@ -101,6 +103,7 @@ fun DeriveBox(component: UIModelItem) {
             .clip(
                 component.modifier?.clipShape.getShape(component.modifier?.cornerRadius)
             )
+            .size(size?.width.toDp(),size?.height.toDp())
             .verticalScroll(rememberScrollState())
 
     ) {
@@ -117,7 +120,7 @@ fun DeriveText(component: UIModelItem) {
         color = Color.fromHex(textStyle?.textColor ?: "#000000"),
         fontSize = textStyle?.textSize.toSp(),
         fontWeight = textStyle?.textStyle.getFontStyle(),
-        maxLines = textStyle?.maxLines ?: 0,
+        maxLines = textStyle?.maxLines ?: 2,
         modifier = Modifier.padding(
             component.modifier?.layoutParams?.padding?.left?.dp ?: 0.dp,
             component.modifier?.layoutParams?.padding?.top?.dp ?: 0.dp,
@@ -189,3 +192,30 @@ fun DeriveImage(component: UIModelItem) {
         contentScale = ContentScale.Crop
     )
 }
+
+@Composable
+fun DeriveImageWithFullWidth(component: UIModelItem) {
+    val modifier = component.modifier
+    Image(
+        painter = rememberAsyncImagePainter(model = component.value),
+        contentDescription = null,
+        modifier = Modifier
+            .padding(
+                component.modifier?.layoutParams?.padding?.left?.dp ?: 0.dp,
+                component.modifier?.layoutParams?.padding?.top?.dp ?: 0.dp,
+                component.modifier?.layoutParams?.padding?.right?.dp ?: 0.dp,
+                component.modifier?.layoutParams?.padding?.bottom?.dp ?: 0.dp,
+            )
+            .border(
+                border = BorderStroke(
+                    modifier?.borderWidth.toDp(), Color.fromHex(modifier?.borderColor.toString())
+                )
+            )
+            .clip(
+                modifier?.clipShape.getShape(modifier?.cornerRadius)
+            )
+            .fillMaxWidth(),
+        contentScale = ContentScale.Crop
+    )
+}
+
